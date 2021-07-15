@@ -8,7 +8,7 @@
 
 typedef struct lst
 {
-	char buff[BUFF_LEN];
+	char buff[201];
 	size_t size;
 	struct lst *next;
 }		lst;
@@ -31,7 +31,7 @@ void Widify(lst *elem)
 		i++;
 	}
 	elem->size = n;
-	printf("W I D E %s %zu %zu\n", elem->buff, n, i);
+
 }
 
 void Spongify(lst *elem)
@@ -43,7 +43,7 @@ void Spongify(lst *elem)
 	s = 0;
 	while (i < elem->size)
 	{
-		if (elem->buff[i] != ' ')
+		if (elem->buff[i] >= 'a' && elem->buff[i] <= 'z')
 		{
 			elem->buff[i] = elem->buff[i] - (32 * s);
 			s ^= 1;
@@ -61,11 +61,13 @@ void parse(char *arg, lst *elem)
 	while (arg[i])
 	{
 		elem->buff[ i - ((i / 100) * 100)] = arg[i];
+		printf("this %d, %d %d\n",i, i - ((i / 100) * 100), i %100);
 		if (i > 0 && i % 100 == 0)
 		{
 			elem->size = 100;
 			elem->next = calloc(1, sizeof(*elem));
 			elem = elem->next;
+			printf("Over 100 %s\n", elem->buff);
 		}
 		i++;
 	}
